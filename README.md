@@ -1,59 +1,100 @@
-usuario adm com acesso as rota = usuario - senha123
 
-Client Registration System Sistema de cadastro de clientes completo, com as seguintes tecnologias:
+# 📝 Client Registration System - Setup Rápido
 
-Java 8 (JDK + JRE)
+## ✅ Tecnologias Utilizadas
 
-Maven 3.9.9
+- Java 8 (JDK + JRE)
+- Maven 3.9.9
+- Wildfly (Deployment do Frontend WAR)
+- Spring Boot (Backend API)
+- Docker + Docker Compose (Banco de dados)
 
-Wildfly (Deployment do Frontend WAR)
+---
 
-Spring Boot (Backend API)
+## 📦 Pré-requisitos
 
-Docker + Docker Compose (Banco de dados)
+Antes de rodar o projeto, certifique-se de ter instalado:
 
-📦 Pré-requisitos Antes de rodar o projeto, certifique-se de ter instalado:
+| Software       | Versão Recomendada |
+|----------------|-------------------:|
+| Java JDK + JRE | >= 1.8.0_202       |
+| Apache Maven   | 3.9.9              |
+| Docker         | 24.x               |
+| Docker Compose | 2.x                |
+| Wildfly        | Configurado        |
 
-Software Versão recomendada Java JDK 1.8 >= 1.8.0_202 Apache Maven 3.9.9 Docker 24.x Docker Compose 2.x Wildfly Configurado pelo bat frontDeployWildfly
+---
 
-⚠️ Caso ocorra algum problema com o JDK, instale também o JRE 1.8.
+## 🚀 Passo a Passo Rápido
 
-🚀 Passo a Passo para rodar o projeto 1️⃣ Instalar e configurar o Maven Execute o script .bat maven para copiar e configurar o Maven:
+### 1️⃣ Preparar Ambiente
 
-Esse script:
+- Copie a pasta **java** do repositório para `C:\Program Files\`
+- Execute o script `maven.bat` para configurar o Maven
+- Execute o script `frontDeployWildfly.bat` para deploy do frontend
 
-Copia a pasta apache-maven-3.9.9 para C:\
+### 2️⃣ Banco de Dados (Docker Compose)
 
-Configura as variáveis de ambiente MAVEN_HOME e PATH (temporariamente)
+Levantar o ambiente do banco de dados:
 
-2️⃣ Build do Frontend (client-reg-sys) Compile e instale o frontend com Maven:
+```bash
+docker-compose up -d --build
+```
 
-mvn clean install no caminho client-registration-system\client-reg-sys 📝 O módulo client-reg-sys é o frontend em formato .war.
+### 3️⃣ Rodar Backend (Spring Boot)
 
-3️⃣ Subir o Banco de Dados (Docker Compose) Levante o ambiente do banco:
+Execute a classe principal da API Backend:
 
-docker-compose up -d --build Isso irá:
+```bash
+./mvnw spring-boot:run
+```
+ou
 
-Criar e iniciar containers com o banco de dados necessário para a aplicação.
+```bash
+java -jar target/seu-backend-api.jar
+```
 
-4️⃣ Deploy do Frontend no Wildfly Execute o script para fazer o deploy do WAR no Wildfly:
+Classe principal: `CadastroApiApplication`
 
-frontDeployWildfly.bat Esse script roda:
+### 4️⃣ Cadastrar Usuário Admin (via Postman/API)
 
-mvn wildfly:deploy no caminho client-registration-system\client-reg-sys e faz o deploy do arquivo .war gerado no passo 2.
+O sistema só pode ser completamente utilizado por usuários com o perfil `ROLE_ADMIN`.  
+Este tipo de usuário deve ser criado manualmente via API, pois **não é exposto no frontend**.
 
-5️⃣ Rodar a API Backend (Spring Boot) Execute diretamente a classe principal da API:
+Exemplo de requisição (POST):
 
-run CadastroApiApplication(VScodeReadyForJava) Essa aplicação fica fora da pasta /java e é a responsável pela API do sistema.
+- URL: `http://localhost:9090/api/auth/signup`
+- Body (JSON):
 
-🧪 Testes de Verificação Após todos os serviços estarem rodando, você pode:
+```json
+{
+  "username": "usuario",
+  "email": "usuario1@email.com",
+  "password": "senha123",
+  "roles": ["ROLE_ADMIN"]
+}
+```
 
-Acessar o Frontend via navegador.
+### 5️⃣ Verificar API
 
-Verificar se a API responde (ex: http://localhost:8080/api/clients).
+Confirme se a API responde corretamente:
 
-🗒️ Observações Caso precise reinstalar ou reconfigurar o JDK/JRE, revise as variáveis de ambiente (JAVA_HOME, PATH).
+- [http://localhost:8080/api/clients](http://localhost:8080/api/clients)
 
-O deploy do WAR no Wildfly depende do servidor estar configurado corretamente.
+---
 
-O Docker Compose deve estar ativo para o banco funcionar.
+## 🗒️ Observações Importantes
+
+- Verifique as variáveis de ambiente (`JAVA_HOME`, `MAVEN_HOME`, `PATH`) caso encontre erros.
+- O deploy do WAR no Wildfly depende de configuração correta do servidor.
+- O **Docker Compose** deve estar ativo para o banco de dados funcionar corretamente.
+- A criação de usuários `ROLE_ADMIN` é feita diretamente via API (não via frontend).
+
+---
+
+## 🔑 Usuário Padrão (Exemplo de Criação)
+
+| Usuário | Senha     |
+|---------|-----------|
+| `usuario` | `senha123` |
+
