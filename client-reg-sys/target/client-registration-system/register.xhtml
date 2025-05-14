@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cadastro de Cliente - Client Registration System</title>
+    <h:outputStylesheet name="css/style.css" />
+    <link rel="stylesheet" href="https://unpkg.com/primeicons@6.0.1/primeicons.css" />
+    
+    <style>
+        body {
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .cliente-container {
+            width: 100%;
+            max-width: 600px;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .cliente-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .cliente-header h1 {
+            color: #2196F3;
+            margin: 0;
+            font-size: 1.8rem;
+        }
+        
+        .cliente-form .ui-inputfield {
+            width: 100%;
+        }
+        
+        .cliente-footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #757575;
+        }
+        
+        .p-field {
+            margin-bottom: 15px;
+        }
+        
+        .buttons-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 25px;
+        }
+    </style>
+</h:head>
+
+<h:body>
+    <div class="cliente-container">
+        <div class="cliente-header">
+            <h1>Cadastro de Cliente</h1>
+            <p>Preencha os dados do cliente</p>
+        </div>
+        
+        <h:form id="clienteForm" styleClass="cliente-form" enctype="multipart/form-data">
+            <p:messages id="messages" showDetail="true" closable="true">
+                <p:autoUpdate />
+            </p:messages>
+            
+            <div class="p-field">
+                <p:outputLabel for="nome" value="Nome" />
+                <p:inputText id="nome" value="#{clienteBean.cliente.nome}" required="true" 
+                             requiredMessage="Nome é obrigatório" />
+                <p:message for="nome" />
+            </div>
+            
+            <div class="p-field">
+                <p:outputLabel for="email" value="Email" />
+                <p:inputText id="email" value="#{clienteBean.cliente.email}" required="true" 
+                             requiredMessage="Email é obrigatório" />
+                <p:message for="email" />
+            </div>
+            
+            <div class="p-field">
+                <p:outputLabel for="telefone" value="Telefone" />
+                <p:inputMask id="telefone" value="#{clienteBean.cliente.telefone}" 
+                             mask="(99) 99999-9999" required="true" 
+                             requiredMessage="Telefone é obrigatório" />
+                <p:message for="telefone" />
+            </div>
+            
+            <div class="p-field">
+                <p:outputLabel for="endereco" value="Endereço" />
+                <p:inputText id="endereco" value="#{clienteBean.cliente.endereco}" required="true" 
+                             requiredMessage="Endereço é obrigatório" />
+                <p:message for="endereco" />
+            </div>
+            
+            <div class="p-field">
+                <p:outputLabel for="cidade" value="Cidade" />
+                <p:inputText id="cidade" value="#{clienteBean.cliente.cidade}" required="true" 
+                             requiredMessage="Cidade é obrigatória" />
+                <p:message for="cidade" />
+            </div>
+            
+            <div class="p-field">
+                <p:outputLabel for="estado" value="Estado" />
+                <p:inputText id="estado" value="#{clienteBean.cliente.estado}" required="true" 
+                             requiredMessage="Estado é obrigatório" />
+                <p:message for="estado" />
+            </div>
+            
+            <div class="p-field">
+                <p:outputLabel for="cep" value="CEP" />
+                <p:inputMask id="cep" value="#{clienteBean.cliente.cep}" 
+                             mask="99999-999" required="true" 
+                             requiredMessage="CEP é obrigatório" />
+                <p:message for="cep" />
+            </div>
+            
+            <div class="p-field">
+                <p:outputLabel for="logotipo" value="Logotipo" />
+                <p:fileUpload id="logotipo" value="#{clienteBean.logotipo}" mode="simple" skinSimple="true" />
+                <p:message for="logotipo" />
+            </div>
+            
+            <div class="p-field">
+                <p:outputLabel for="observacoes" value="Observações" />
+                <p:inputTextarea id="observacoes" value="#{clienteBean.cliente.observacoes}" rows="3" />
+                <p:message for="observacoes" />
+            </div>
+            
+            <div class="buttons-container">
+                <p:commandButton value="Cancelar" icon="pi pi-times" 
+                                 action="#{clienteBean.cancelar}"
+                                 styleClass="ui-button-secondary" />
+                                 
+                <p:commandButton value="Salvar" icon="pi pi-check" 
+                                 action="#{clienteBean.salvar}"
+                                 update="@form"
+                                 styleClass="ui-button-primary" />
+            </div>
+        </h:form>
+        
+        <div class="cliente-footer">
+            <p>© 2025 Company Name. All rights reserved.</p>
+        </div>
+    </div>
+</h:body>
+</html>
